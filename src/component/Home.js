@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ImgSlider from './ImgSlider';
@@ -9,7 +9,7 @@ import { setMovies } from '../redux/actions/movies.actions';
 
 function Home() {
     const dispatch=useDispatch();
-    
+    /* eslint-disable */
     useEffect(() => {
        db.collection("movies").onSnapshot( (snapshot)=>{
             var tempMovies=snapshot.docs.map((doc)=>{
@@ -18,6 +18,7 @@ function Home() {
            dispatch(setMovies(tempMovies));
        })            
     }, [])  
+    /* eslint-enable */
 
     return (
         <Container>

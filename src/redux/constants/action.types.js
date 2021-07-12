@@ -2,4 +2,6 @@ export const ActionTypes = {
     SET_MOVIES: 'SET_MOVIES',
     GET_MOVIES: 'GET_MOVIES',
     GET_DETAIL: 'GET_DETAIL',
+    SET_LOGIN:'SET_LOGIN',
+    SET_SIGNOUT:'SET_SIGNOUT'
 }

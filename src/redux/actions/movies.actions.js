@@ -17,3 +17,18 @@ export const getDetail=(id)=>{
         payload: id
     }
 }
+export const userLogin=(data)=>{
+    return{
+        type:ActionTypes.SET_LOGIN,
+        payload:{
+            name:data.displayName,
+            email:data.email,
+            photo:data.photoURL
+        }
+    }
+}
+export const userLogout=(data)=>{
+    return{
+        type:ActionTypes.SET_SIGNOUT,
+    }
+}

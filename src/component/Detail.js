@@ -7,7 +7,7 @@ function Detail() {
 
     const {id}=useParams();
     const [movies, setMovies]=useState();
-
+   /*eslint-disable*/
     useEffect(() => {
         db.collection('movies')
         .doc(id)
@@ -21,31 +21,28 @@ function Detail() {
             }
         })
     }, [])
+    /*eslint-enable*/
 
-    console.log(movies);
 
     return (
-        <Container>
-            <Background>
-                <img src={movies?.backgroundImg} />
-            </Background>
+        <Container src={movies?.backgroundImg}>
             <ImageTitle>
-                <img src={movies?.titleImg} />
+                <img src={movies?.titleImg} alt="background"/>
             </ImageTitle>
             <Controls>
                 <PlayButton>
-                    <img src="/images/play-icon-black.png" />
+                    <img src="/images/play-icon-black.png" alt="detail-images"/>
                     <span>PLAY</span>
                 </PlayButton>
                 <TrailerButton>
-                    <img src="/images/play-icon-white.png" />
+                    <img src="/images/play-icon-white.png" alt="detail-images"/>
                     <span>Trailer</span>
                 </TrailerButton>
                 <AddButton>
                     <span>+</span>
                 </AddButton>
                 <GroupWatchButton>
-                    <img src="/images/group-icon.png" />
+                    <img src="/images/group-icon.png" alt="detail-images"/>
                 </GroupWatchButton>
             </Controls>
             <SubTitle>
@@ -66,22 +63,20 @@ const Container = styled.div`
     min-height:calc(100vh - 70px);
     padding: 0 calc(3.5vw + 5px);
     position: relative;
-`;
-const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-    opacity: 0.8;
 
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+     &::before{
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        opacity: 0.5 ;
+        background: url(${(props)=>props.src}) no-repeat center center /cover;
     }
 `;
+
 const ImageTitle = styled.div`
     height: 30vh;
     width: 35vw;

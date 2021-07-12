@@ -1,37 +1,80 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+import {auth,provider} from '../firebase';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { userLogin, userLogout } from '../redux/actions/movies.actions';
+
 function Header() {
+    const dispatch = useDispatch();
+    const userName=useSelector(state=>state.userReducer.name)
+    const userPhoto=useSelector(state=>state.userReducer.photo)
+    const history=useHistory();
+    /* eslint-disable */
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user)=>{
+            if(user){
+                dispatch(userLogin(user))
+            }
+        })
+        history.push('/')
+    }, [])
+    /* eslint-enable */
+    const signIn=()=>{
+        auth.signInWithPopup(provider)
+        .then((result)=>{
+            dispatch(userLogin(result.user))
+        })
+        history.push('/')
+    }
+
+    const signOut=()=>{
+        auth.signOut()
+        .then(()=>{
+            dispatch(userLogout())
+            history.push("/login")
+        })
+    }
+    
+    
     return (
         <Nav>
             <Logo src='/images/logo.svg' />
+            {
+                !userName ?
+                <LoginContainer>
+                        <Login onClick={signIn}>Login</Login>
+                </LoginContainer>:
+                <>
+                    <NavMenu>
+                        <a href="/">
+                            <img src='/images/home-icon.svg' alt="nav-icon"/>
+                            <Link to="/">
+                                <span>HOME</span>
+                            </Link>
+                        </a>
+                        <a href="/">
+                            <img src='/images/search-icon.svg' alt="nav-icon"/>
+                            <span>SEARCH</span>
+                        </a>
+                        <a href="/">
+                            <img src='/images/watchlist-icon.svg' alt="nav-icon"/>
+                            <span>WATCHLIST</span>
+                        </a>
+                        <a href="/">
+                            <img src='/images/original-icon.svg' alt="nav-icon"/>
+                            <span>ORIGINALS</span>
+                        </a>
+                        <a href="/">
+                            <img src='/images/movie-icon.svg' alt="nav-icon"/>
+                            <span>MOVIES</span>
+                        </a>
+                    </NavMenu >
 
-            <NavMenu>
-                <a>
-                    <img src='/images/home-icon.svg' />
-                    <Link to="/">
-                        <span>HOME</span>
-                    </Link>
-                </a>
-                <a>
-                    <img src='/images/search-icon.svg' />
-                    <span>SEARCH</span>
-                </a>
-                <a>
-                    <img src='/images/watchlist-icon.svg' />
-                    <span>WATCHLIST</span>
-                </a>
-                <a>
-                    <img src='/images/original-icon.svg' />
-                    <span>ORIGINALS</span>
-                </a>
-                <a>
-                    <img src='/images/movie-icon.svg' />
-                    <span>MOVIES</span>
-                </a>
-            </NavMenu >
+                    <UserImg src={userPhoto} onClick={signOut} />
+                </>
 
-            <UserImg src='images/profile.jpg'/>
+            }
         </Nav>
     )
 }
@@ -49,6 +92,30 @@ const Nav = styled.nav`
 const Logo = styled.img`
     width: 80px;
 `;
+const LoginContainer=styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+`;
+const Login = styled.button`
+    border:1px solid #F9F9F9;
+    padding: 8px 16px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease 0s;
+    color: white;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+
+`;
+
 const NavMenu = styled.div`
     display: flex;
     flex:1;
