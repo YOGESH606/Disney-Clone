@@ -12,6 +12,7 @@ import GlobalStyle from './globalStyles';
 
 
 export default function App() {
+    console.log(process.env);
     return (
         <>
             <Router>
