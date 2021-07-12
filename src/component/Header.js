@@ -25,14 +25,14 @@ function Header() {
         .then((result)=>{
             dispatch(userLogin(result.user))
         })
-        history.push('/')
+       
     }
 
     const signOut=()=>{
         auth.signOut()
         .then(()=>{
             dispatch(userLogout())
-            history.push("/login")
+            history.push("/")
         })
     }
     
@@ -49,7 +49,7 @@ function Header() {
                     <NavMenu>
                         <a href="/">
                             <img src='/images/home-icon.svg' alt="nav-icon"/>
-                            <Link to="/">
+                            <Link to="/home">
                                 <span>HOME</span>
                             </Link>
                         </a>

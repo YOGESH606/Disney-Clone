@@ -15,23 +15,16 @@ export default function App() {
     return (
         <>
             <Router>
-                <GlobalStyle/>
-                <Header/>
+                <GlobalStyle />
+                <Header />
                 <Switch>
-                    <Route path="/login">
-                          <Login/>
-                    </Route>
-                    <Route path="/detail/:id">
-                          <Detail/>
-                    </Route>
-                    <Route path="/" >
-                        <Home />
-                    </Route>
-                    
+                    <Route exact path="/" component={Login}/>
+                    <Route exact path="/detail/:id" component={Detail} />
+                    <Route exact path="/home" component={Home} />
+                       
                 </Switch>
             </Router>
         </>
     )
 }
 <GlobalStyle />
-            
